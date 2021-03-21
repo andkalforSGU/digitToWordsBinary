@@ -24,12 +24,20 @@ typedef struct  discharges
 	struct discharges	*next;
 } dis_t;
 
+typedef struct  discharges_tree
+{
+	char					*value;
+	struct discharges_tree	*left;
+	struct discharges_tree	*right;
+} dis_tree_t;
+
 //--------------------DECLARATIONS------------------------
 
-dis_t	*new_node(int value);
-dis_t	*parse_digit(char *str);
-int		add_node_tail(dis_t *head, dis_t *new_node);
-void	print_list(dis_t *head);
+dis_t		*new_list_node(int value);
+dis_t		*parse_digit(char *str);
+int			add_list_tail(dis_t *head, dis_t *new_node);
+void		print_list(dis_t *head);
+dis_tree_t	*new_tree_node(char *value);
 
 //--------------------------------------------------------
 
@@ -47,7 +55,7 @@ int	main(int argc, char **argv)
 
 //------------------------LIST----------------------------
 
-dis_t	*new_node(int value)
+dis_t	*new_list_node(int value)
 {
 	dis_t	*node;
 
@@ -55,7 +63,7 @@ dis_t	*new_node(int value)
 	node = (dis_t*)malloc(sizeof(dis_t*));
 	if (node == NULL)
 	{
-		write(2, "Can't create node.", 18);
+		write(2, "Can't create list-node.", 23);
 		return (node);
 	}
 	node->next = NULL;
@@ -63,7 +71,7 @@ dis_t	*new_node(int value)
 	return (node);
 }
 
-int		add_node_tail(dis_t *head, dis_t *new_node)
+int		add_list_tail(dis_t *head, dis_t *new_node)
 {
 	dis_t	*copy;
 
@@ -98,15 +106,39 @@ dis_t	*parse_digit(char *str)
 	i = 0;
 	while (str[i] != '\0')
 		i++;
-	p_digit = new_node(str[i - 1] - '0');
+	p_digit = new_list_node(str[i - 1] - '0');
 	count = 10;
 	i--;
 	while (i > 0)
 	{
 		digit = (str[i - 1] - '0') * count;
-		add_node_tail(p_digit, new_node(digit));
+		add_list_tail(p_digit, new_list_node(digit));
 		count *= 10;
 		i--;
 	}
 	return (p_digit);
+}
+
+//------------------------TREE-------------------------
+
+dis_tree_t	*new_tree_node(char *value)
+{
+	dis_tree_t	*tree;
+
+	tree = NULL;
+	tree = (dis_tree_t*)malloc(sizeof(dis_tree_t));
+	if (tree == NULL)
+	{
+		write(2, "Can't create tree-node.", 23);
+		return (tree);
+	}
+	tree->left = NULL;
+	tree->right = NULL;
+	tree->value = value;
+}
+
+int	add_tree_tail(dis_tree_t *tree_head, dis_tree_t *tree_node)
+{
+	if ()
+	return (0);
 }
